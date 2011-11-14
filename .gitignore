@@ -1,1 +1,8 @@
+# Netbeans Files #
 nbproject
+
+# Eclipse Files #
+.project
+.classpath
+.settings/
+eclipse/
