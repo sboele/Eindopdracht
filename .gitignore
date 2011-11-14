@@ -6,3 +6,12 @@ nbproject
 .classpath
 .settings/
 eclipse/
+
+# global excludes #
+db
+log
+logs
+precompiled
+tmp
+test-result
+server.pid

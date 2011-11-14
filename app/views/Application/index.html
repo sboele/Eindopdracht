@@ -1,4 +1,24 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-#{welcome /}
+<table>
+    <thead>
+    <th>Naam</th>
+    <th>Haarkleur</th>
+    <th>Gewicht</th>
+    <th>Lengte</th>
+    <th>Lotion</th>
+    <th>Resultaat</th>
+    </thead>
+    <tbody>
+        #{list items:rows, as:'row'}
+        <tr>
+            #{list items:row, as:'column'}
+                <td>
+                    ${column}
+                </td>
+            #{/list}
+        </tr>
+        #{/list}
+    </tbody>
+</table>

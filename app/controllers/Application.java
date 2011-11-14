@@ -3,14 +3,13 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
-import java.util.*;
-
-import models.*;
+import helpers.*;
+import java.util.List;
 
 public class Application extends Controller {
 
     public static void index() {
-        render();
+        List<List<String>> rows = new Helper().getBodyLotionData();
+        render(rows);
     }
-
 }
