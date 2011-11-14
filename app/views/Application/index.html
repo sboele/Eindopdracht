@@ -1,14 +1,16 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-<table>
+<table border="1">
     <thead>
-    <th>Naam</th>
-    <th>Haarkleur</th>
-    <th>Gewicht</th>
-    <th>Lengte</th>
-    <th>Lotion</th>
-    <th>Resultaat</th>
+    	<tr>
+		    <th>Naam</th>
+		    <th>Haarkleur</th>
+		    <th>Gewicht</th>
+		    <th>Lengte</th>
+		    <th>Lotion</th>
+		    <th>Resultaat</th>
+	    </tr>
     </thead>
     <tbody>
         #{list items:rows, as:'row'}
