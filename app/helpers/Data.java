@@ -14,6 +14,7 @@ import java.util.List;
 public class Data {
 
 	String[][] bodyLotionNumericData = new String[][] {
+			{"Naam", "Haarkleur", "Gewicht", "Lengte", "Lotion", "Resultaat"},
 			{ "Sarah", "blond", "1,63", "49", "nee", "merkbaar" },
 			{ "Alex", "blond", "1,85", "70", "ja", "gering" },
 			{ "Diana", "bruin", "1,50", "51", "ja", "gering" },
@@ -37,6 +38,7 @@ public class Data {
 	 * 
 	 */
 	String[][] bodyLotionOrdinalData = new String[][] {
+			{"Naam", "Haarkleur", "Gewicht", "Lengte", "Lotion", "Resultaat"},
 			{ "Sarah", "blond", "middel", "licht", "nee", "merkbaar" },
 			{ "Alex", "blond", "groot", "normaal", "ja", "gering" },
 			{ "Diana", "bruin", "klein", "licht", "ja", "gering" },
