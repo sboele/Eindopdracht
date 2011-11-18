@@ -11,7 +11,7 @@ import java.util.List;
  * 
  * @author Sander
  */
-public class Helper {
+public class Data {
 
 	String[][] bodyLotionNumericData = new String[][] {
 			{ "Sarah", "blond", "1,63", "49", "nee", "merkbaar" },
