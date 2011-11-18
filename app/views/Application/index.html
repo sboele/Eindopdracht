@@ -1,39 +1,56 @@
-#{extends 'main.html' /}
-#{set title:'Home' /}
+#{extends 'main.html' /} #{set title:'Home' /}
+<section>
+	<table class="numericData">
+		<thead>
+			<tr>
+				<th colspan="6">Numeriek</th>
+			</tr>
+		</thead>
+		<tbody>
+			#{list items:numericTable, as:'row'}
+			<tr>
+				#{list items:row, as:'column'}
+				<td>${column}</td> #{/list}
+			</tr>
+			#{/list}
+		</tbody>
+	</table>
 
-<table border="1" style="float: left;">
-    <thead>
-    	<tr>
-		    <th colspan="6">Numeriek</th>
-	    </tr>
-    </thead>
-    <tbody>
-        #{list items:numericTable, as:'row'}
-        <tr>
-            #{list items:row, as:'column'}
-                <td>
-                    ${column}
-                </td>
-            #{/list}
-        </tr>
-        #{/list}
-    </tbody>
-</table>
-<table border="1" style="float: left; margin-left: 50px">
-    <thead>
-    	<tr>
-		    <th colspan="6">Ordinaal</th>
-	    </tr>
-    </thead>
-    <tbody>
-        #{list items:ordinalTable, as:'row'}
-        <tr>
-            #{list items:row, as:'column'}
-                <td>
-                    ${column}
-                </td>
-            #{/list}
-        </tr>
-        #{/list}
-    </tbody>
-</table>
+	<table class="ordinalData">
+		<thead>
+			<tr>
+				<th colspan="6">Ordinaal</th>
+			</tr>
+		</thead>
+		<tbody>
+			#{list items:ordinalTable, as:'row'}
+			<tr>
+				#{list items:row, as:'column'}
+				<td>${column}</td> #{/list}
+			</tr>
+			#{/list}
+		</tbody>
+	</table>
+</section>
+<section>
+	<table class="oneRModel">
+		<thead>
+			<tr>
+				<th colspan="6">1R Model</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</section>
+<section>
+	<table class="naiveBayes">
+		<thead>
+			<tr>
+				<th colspan="6">Naive Bayes</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</section>
