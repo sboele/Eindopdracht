@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import play.Logger;
+
 /**
  * 
  * @author Sander
@@ -18,7 +20,7 @@ import java.util.Set;
 public class Data {
 
 	String[][] bodyLotionNumericData = new String[][] {
-			{"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
+			{ "Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat" },
 			{ "Sarah", "blond", "1,63", "49", "nee", "merkbaar" },
 			{ "Alex", "blond", "1,85", "70", "ja", "gering" },
 			{ "Diana", "bruin", "1,50", "51", "ja", "gering" },
@@ -30,19 +32,12 @@ public class Data {
 
 	/*
 	 * 
-	 * LENGTE
-	 * Klein: 	<= 1,60
-	 * Middel: 	> 1,60 && < 1,85
-	 * Groot:	>= 1,85
+	 * LENGTE Klein: <= 1,60 Middel: > 1,60 && < 1,85 Groot: >= 1,85
 	 * 
-	 * GEWICHT
-	 * Licht: 	<= 55
-	 * Normaal: > 55 && < 80
-	 * Zwaar: 	>= 80
-	 * 
+	 * GEWICHT Licht: <= 55 Normaal: > 55 && < 80 Zwaar: >= 80
 	 */
 	String[][] bodyLotionOrdinalData = new String[][] {
-			{"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
+			{ "Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat" },
 			{ "Sarah", "blond", "middel", "licht", "nee", "merkbaar" },
 			{ "Alex", "blond", "groot", "normaal", "ja", "gering" },
 			{ "Diana", "bruin", "klein", "licht", "ja", "gering" },
@@ -77,58 +72,83 @@ public class Data {
 
 		return rows;
 	}
-	
-	public List<String> getValuesForAttributeInNumericData(int attributeIndex, boolean includeHeader) {
-		List<String> values = new ArrayList<String>();		
+
+	public List<String> getValuesForAttributeInNumericData(int attributeIndex,
+			boolean includeHeader) {
+		List<String> values = new ArrayList<String>();
 		for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++)
 			values.add(bodyLotionNumericData[i][attributeIndex]);
 		return values;
 	}
-	
-	public List<String> getValuesForAttributeInOrdinalData(int attributeIndex, boolean includeHeader) {
+
+	public List<String> getValuesForAttributeInOrdinalData(int attributeIndex,
+			boolean includeHeader) {
 		List<String> values = new ArrayList<String>();
 		for (int i = getStartIndex(includeHeader); i < bodyLotionOrdinalData.length; i++)
 			values.add(bodyLotionOrdinalData[i][attributeIndex]);
 		return values;
 	}
-	
-	public List<String> getUniqueValuesForAttributeInNumericData(int attributeIndex, boolean includeHeader) {
+
+	public List<String> getUniqueValuesForAttributeInNumericData(
+			int attributeIndex, boolean includeHeader) {
 		Set<String> possibleValues = new HashSet<String>();
 		for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++)
 			possibleValues.add(bodyLotionNumericData[i][attributeIndex]);
 		return new ArrayList<String>(possibleValues);
 	}
-	
-	public List<String> getUniqueValuesForAttributeInOrdinalData(int attributeIndex, boolean includeHeader) {
+
+	public List<String> getUniqueValuesForAttributeInOrdinalData(
+			int attributeIndex, boolean includeHeader) {
 		Set<String> possibleValues = new HashSet<String>();
 		for (int i = getStartIndex(includeHeader); i < bodyLotionOrdinalData.length; i++)
 			possibleValues.add(bodyLotionOrdinalData[i][attributeIndex]);
 		return new ArrayList<String>(possibleValues);
 	}
-	
-	public Map<String, Integer> getGroupedValuesForAttributeInNumericData(int attributeIndex, boolean includeHeader) {
+
+	public Map<String, Integer> getGroupedValuesForAttributeInNumericData(
+			int attributeIndex, boolean includeHeader) {
 		Map<String, Integer> groupedValues = new HashMap<String, Integer>();
 		for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++) {
-			if (groupedValues.containsKey(bodyLotionNumericData[i][attributeIndex]))
-				groupedValues.put(bodyLotionNumericData[i][attributeIndex], groupedValues.get(bodyLotionNumericData[i][attributeIndex]) + 1);
+			if (groupedValues
+					.containsKey(bodyLotionNumericData[i][attributeIndex]))
+				groupedValues
+						.put(bodyLotionNumericData[i][attributeIndex],
+								groupedValues
+										.get(bodyLotionNumericData[i][attributeIndex]) + 1);
 			else
 				groupedValues.put(bodyLotionNumericData[i][attributeIndex], 1);
 		}
 		return groupedValues;
 	}
-	
-	public Map<String, Integer> getGroupedValuesForAttributeInOrdinalData(int attributeIndex, boolean includeHeader) {
+
+	public Map<String, Integer> getGroupedValuesForAttributeInOrdinalData(
+			int attributeIndex, boolean includeHeader) {
 		Map<String, Integer> groupedValues = new HashMap<String, Integer>();
 		for (int i = getStartIndex(includeHeader); i < bodyLotionOrdinalData.length; i++) {
-			if (groupedValues.containsKey(bodyLotionOrdinalData[i][attributeIndex]))
-				groupedValues.put(bodyLotionOrdinalData[i][attributeIndex], groupedValues.get(bodyLotionOrdinalData[i][attributeIndex]) + 1);
+			if (groupedValues
+					.containsKey(bodyLotionOrdinalData[i][attributeIndex]))
+				groupedValues
+						.put(bodyLotionOrdinalData[i][attributeIndex],
+								groupedValues
+										.get(bodyLotionOrdinalData[i][attributeIndex]) + 1);
 			else
 				groupedValues.put(bodyLotionOrdinalData[i][attributeIndex], 1);
-			}
+		}
 		return groupedValues;
 	}
-	
+
+	public List<String> getAttributes() {
+		List<String> attributes = new ArrayList<String>();
+		for (int i = 0; i < bodyLotionNumericData[0].length; i++)
+			attributes.add(bodyLotionNumericData[0][i]);
+		return attributes;
+	}
+
 	public int getStartIndex(boolean includeHeader) {
 		return includeHeader ? 0 : 1;
+	}
+
+	public int getIndexOfAttribute(String attribute) {
+		return getAttributes().indexOf(attribute);
 	}
 }
