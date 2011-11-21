@@ -7,11 +7,10 @@ package helpers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import play.Logger;
 
 /**
  * 
@@ -52,6 +51,8 @@ public class Data {
         {"Emily", "rood", "middel", "zwaar", "nee", "merkbaar"},
         {"Peter", "bruin", "middel", "zwaar", "nee", "gering"},
         {"Jan", "bruin", "middel", "normaal", "nee", "gering"},
+        {"Sander", "donkerblond", "middel", "normaal", "ja", "merkbaar"},
+        {"Leonard", "bruin", "middel", "normaal", "ja", "merkbaar"},
         {"Katie", "blond", "klein", "licht", "ja", "gering"}};
 
     public List<List<String>> getNumericBodyLotionData() {
@@ -161,16 +162,27 @@ public class Data {
         }
         return result;
     }
-    
-	public List<String> getAttributes() {
-		List<String> attributes = new ArrayList<String>();
-		for (int i = 0; i < bodyLotionNumericData[0].length; i++)
-			attributes.add(bodyLotionNumericData[0][i]);
-		return attributes;
-	}
 
-	public int getIndexOfAttribute(String attribute) {
-		return getAttributes().indexOf(attribute);
-	}
-	
+    public List<String> getAttributes() {
+        List<String> attributes = new ArrayList<String>();
+        for (int i = 0; i < bodyLotionNumericData[0].length; i++) {
+            attributes.add(bodyLotionNumericData[0][i]);
+        }
+        return attributes;
+    }
+
+    public int getIndexOfAttribute(String attribute) {
+        return getAttributes().indexOf(attribute);
+    }
+
+    public int maxNumberOfUniqueValuesOrdinal() {
+        int result = 0;
+        for (int i = 1; i < getOrdinalBodyLotionData().get(0).size(); i++) {
+            Map map = getGroupedValuesForAttributeInOrdinalData(i, false);
+            if (map.size() > result) {
+                result = map.size();
+            }
+        }
+        return result;
+    }
 }
