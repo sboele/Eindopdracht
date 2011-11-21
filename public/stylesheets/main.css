@@ -1,0 +1,30 @@
+body {
+	width: 800px;
+}
+
+section {
+	float: left;
+	width: 800px;
+	margin-bottom: 50px;
+}
+
+table {
+	border: 1px solid #000000;
+}
+
+table tr td {
+	border: 1px solid #000000;
+}
+
+.numericData {
+	float: left;
+}
+
+.ordinalData {
+	float: left;
+	margin-left: 50px;
+}
+
+.oneRModel {
+	float: left;
+}
