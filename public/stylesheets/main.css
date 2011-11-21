@@ -28,3 +28,8 @@ table tr td {
 .oneRModel {
 	float: left;
 }
+
+.oneRModelBestRule {
+	float: left;
+	width: 800px;
+}
