@@ -5,8 +5,10 @@
 package helpers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -76,17 +78,57 @@ public class Data {
 		return rows;
 	}
 	
-	public List<String> getValuesForAttributeInNumericData(int attributeIndex) {
+	public List<String> getValuesForAttributeInNumericData(int attributeIndex, boolean includeHeader) {
+		List<String> values = new ArrayList<String>();		
+		for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++)
+			values.add(bodyLotionNumericData[i][attributeIndex]);
+		return values;
+	}
+	
+	public List<String> getValuesForAttributeInOrdinalData(int attributeIndex, boolean includeHeader) {
+		List<String> values = new ArrayList<String>();
+		for (int i = getStartIndex(includeHeader); i < bodyLotionOrdinalData.length; i++)
+			values.add(bodyLotionOrdinalData[i][attributeIndex]);
+		return values;
+	}
+	
+	public List<String> getUniqueValuesForAttributeInNumericData(int attributeIndex, boolean includeHeader) {
 		Set<String> possibleValues = new HashSet<String>();
-		for (int i = 1; i < bodyLotionNumericData.length; i++)
+		for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++)
 			possibleValues.add(bodyLotionNumericData[i][attributeIndex]);
 		return new ArrayList<String>(possibleValues);
 	}
 	
-	public List<String> getValuesForAttributeInOrdinalData(int attributeIndex) {
+	public List<String> getUniqueValuesForAttributeInOrdinalData(int attributeIndex, boolean includeHeader) {
 		Set<String> possibleValues = new HashSet<String>();
-		for (int i = 1; i < bodyLotionOrdinalData.length; i++)
+		for (int i = getStartIndex(includeHeader); i < bodyLotionOrdinalData.length; i++)
 			possibleValues.add(bodyLotionOrdinalData[i][attributeIndex]);
 		return new ArrayList<String>(possibleValues);
+	}
+	
+	public Map<String, Integer> getGroupedValuesForAttributeInNumericData(int attributeIndex, boolean includeHeader) {
+		Map<String, Integer> groupedValues = new HashMap<String, Integer>();
+		for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++) {
+			if (groupedValues.containsKey(bodyLotionNumericData[i][attributeIndex]))
+				groupedValues.put(bodyLotionNumericData[i][attributeIndex], groupedValues.get(bodyLotionNumericData[i][attributeIndex]) + 1);
+			else
+				groupedValues.put(bodyLotionNumericData[i][attributeIndex], 1);
+		}
+		return groupedValues;
+	}
+	
+	public Map<String, Integer> getGroupedValuesForAttributeInOrdinalData(int attributeIndex, boolean includeHeader) {
+		Map<String, Integer> groupedValues = new HashMap<String, Integer>();
+		for (int i = getStartIndex(includeHeader); i < bodyLotionOrdinalData.length; i++) {
+			if (groupedValues.containsKey(bodyLotionOrdinalData[i][attributeIndex]))
+				groupedValues.put(bodyLotionOrdinalData[i][attributeIndex], groupedValues.get(bodyLotionOrdinalData[i][attributeIndex]) + 1);
+			else
+				groupedValues.put(bodyLotionOrdinalData[i][attributeIndex], 1);
+			}
+		return groupedValues;
+	}
+	
+	public int getStartIndex(boolean includeHeader) {
+		return includeHeader ? 0 : 1;
 	}
 }

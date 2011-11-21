@@ -27,7 +27,7 @@ public class OneRModel {
 			List<String> row = new ArrayList<String>();
 			row.add(indices.get(i));
 			row.add(attributes.get(i));
-			row.add(new helpers.Data().getValuesForAttributeInOrdinalData(ordinalData.get(0).indexOf(attributes.get(i))).toString());
+			row.add(new helpers.Data().getUniqueValuesForAttributeInOrdinalData(ordinalData.get(0).indexOf(attributes.get(i)), false).toString());
 			oneRModel.add(row);
 		}
 		
