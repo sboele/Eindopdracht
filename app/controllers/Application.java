@@ -12,6 +12,7 @@ public class Application extends Controller {
 		List<List<String>> numericTable = new Data().getNumericBodyLotionData();
 		List<List<String>> ordinalTable = new Data().getOrdinalBodyLotionData();
 		List<List<String>> oneRModelTable = new OneRModel().getOneRModel(ordinalTable);
-		render(numericTable, ordinalTable, oneRModelTable);
+		List<List<String>> bayesTable = new Bayes().getBayesData(ordinalTable);
+		render(numericTable, ordinalTable, oneRModelTable, bayesTable);
 	}
 }

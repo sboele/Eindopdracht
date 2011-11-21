@@ -1,38 +1,41 @@
 #{extends 'main.html' /} #{set title:'Home' /}
 <section>
-	<table class="numericData">
-		<thead>
-			<tr>
-				<th colspan="6">Numeriek</th>
-			</tr>
-		</thead>
-		<tbody>
-			#{list items:numericTable, as:'row'}
-			<tr>
-				#{list items:row, as:'column'}
-				<td>${column}</td> #{/list}
-			</tr>
-			#{/list}
-		</tbody>
-	</table>
+    <table class="numericData">
+        <thead>
+            <tr>
+                <th colspan="6">Numeriek</th>
+            </tr>
+        </thead>
+        <tbody>
+            #{list items:numericTable, as:'row'}
+            <tr>
+                #{list items:row, as:'column'}
+                <td>${column}</td> 
+                #{/list}
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
 
-	<table class="ordinalData">
-		<thead>
-			<tr>
-				<th colspan="6">Ordinaal</th>
-			</tr>
-		</thead>
-		<tbody>
-			#{list items:ordinalTable, as:'row'}
-			<tr>
-				#{list items:row, as:'column'}
-				<td>${column}</td> #{/list}
-			</tr>
-			#{/list}
-		</tbody>
-	</table>
+    <table class="ordinalData">
+        <thead>
+            <tr>
+                <th colspan="6">Ordinaal</th>
+            </tr>
+        </thead>
+        <tbody>
+            #{list items:ordinalTable, as:'row'}
+            <tr>
+                #{list items:row, as:'column'}
+                <td>${column}</td> 
+                #{/list}
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
 </section>
 <section>
+<<<<<<< HEAD
 	<table class="oneRModel">
 		<thead>
 			<tr>
@@ -50,13 +53,27 @@
 	</table>
 </section>
 <section>
-	<table class="naiveBayes">
-		<thead>
-			<tr>
-				<th colspan="6">Naive Bayes</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
+    <table class="naiveBayes">
+        <thead>
+            <tr>
+                <th colspan="15">Naive Bayes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">Haarkleur</td> 
+                <td colspan="3">Gewicht</td> 
+                <td colspan="3">Lengte</td> 
+                <td colspan="3">Lotion</td> 
+                <td colspan="3">Resultaat</td>
+            </tr>
+            #{list items:bayesTable, as:'row'}
+            <tr>
+                #{list items:row, as:'column'}
+                <td>${column}</td> 
+                #{/list}
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
 </section>
