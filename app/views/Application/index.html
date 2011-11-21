@@ -40,6 +40,12 @@
 			</tr>
 		</thead>
 		<tbody>
+			#{list items:oneRModelTable, as:'row'}
+			<tr>
+				#{list items:row, as:'column'}
+				<td>${column}</td> #{/list}
+			</tr>
+			#{/list}
 		</tbody>
 	</table>
 </section>
