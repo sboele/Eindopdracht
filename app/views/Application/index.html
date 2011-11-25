@@ -53,10 +53,10 @@
 	<p class="oneRModelBestRule">Beste keuze is de rule van ${oneRModelBestRule}</p>
 </section>
 <section>
-    <table class="naiveBayes">
+    <table class="naiveBayesNominal">
         <thead>
             <tr>
-                <th colspan="15">Naive Bayes</th>
+                <th colspan="15">Naive Bayes Nominal</th>
             </tr>
         </thead>
         <tbody>
@@ -67,7 +67,33 @@
                 <td colspan="3">Lotion</td> 
                 <td colspan="3">Resultaat</td>
             </tr>
-            #{list items:bayesTable, as:'row'}
+            #{list items:bayesTableNominal, as:'row'}
+            <tr>
+                #{list items:row, as:'column'}
+                <td>${column}</td> 
+                #{/list}
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <table class="naiveBayesNumeric">
+        <thead>
+            <tr>
+                <th colspan="15">Naive Bayes Numeric</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">Haarkleur</td> 
+                <td colspan="3">Gewicht</td> 
+                <td colspan="3">Lengte</td> 
+                <td colspan="3">Lotion</td> 
+                <td colspan="3">Resultaat</td>
+            </tr>
+            #{list items:bayesTableNumeric, as:'row'}
             <tr>
                 #{list items:row, as:'column'}
                 <td>${column}</td> 

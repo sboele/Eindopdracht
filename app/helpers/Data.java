@@ -7,7 +7,6 @@ package helpers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,6 +51,7 @@ public class Data {
         {"Peter", "bruin", "middel", "zwaar", "nee", "gering"},
         {"Jan", "bruin", "middel", "normaal", "nee", "gering"},
         {"Sander", "donkerblond", "middel", "normaal", "ja", "merkbaar"},
+        {"Ronald", "paars", "klein", "zwaar", "ja", "merkbaar"},
         {"Leonard", "bruin", "middel", "normaal", "ja", "merkbaar"},
         {"Katie", "blond", "klein", "licht", "ja", "gering"}};
 
@@ -179,6 +179,17 @@ public class Data {
         int result = 0;
         for (int i = 1; i < getOrdinalBodyLotionData().get(0).size(); i++) {
             Map map = getGroupedValuesForAttributeInOrdinalData(i, false);
+            if (map.size() > result) {
+                result = map.size();
+            }
+        }
+        return result;
+    }
+    
+    public int maxNumberOfUniqueValuesNumeric() {
+        int result = 0;
+        for (int i = 1; i < getNumericBodyLotionData().get(0).size(); i++) {
+            Map map = getGroupedValuesForAttributeInNumericData(i, false);
             if (map.size() > result) {
                 result = map.size();
             }
