@@ -1,5 +1,7 @@
 package helpers;
 
+import java.util.List;
+
 public class Statistics {
 	
 	public double probabilityDensity(double x, double mean, double standardDeviation) {
@@ -8,12 +10,20 @@ public class Statistics {
         return fx;
 	}
 	
-	public double mean() {
-		return 0.0;
+	public double mean(List<Double> numbers) {
+		double total = 0.0;
+		for (double number : numbers)
+			total += number;
+		return total/numbers.size();
 	}
 	
-	public double standardDeviation() {
-		return 0.0;
+	public double standardDeviation(List<Double> numbers) {
+		double mean = mean(numbers);
+		double numerator = 0.0;
+		double denominator = numbers.size() - 1;
+		for (double number: numbers)
+			numerator += Math.pow(number - mean, 2);
+		return Math.sqrt(numerator/denominator);
 	}
 
 }

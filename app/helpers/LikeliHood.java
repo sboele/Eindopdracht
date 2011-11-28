@@ -1,20 +1,48 @@
 package helpers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import play.Logger;
 
 public class LikeliHood {
 	
-	public double getLikeliHood(List<String> attributes, boolean forYes) {
-		return 0.0;
+	Data data;
+	
+	public LikeliHood() {
+		data = new Data();
 	}
 	
-	public double getProbability(double likeliHoodYes, double likeliHoodNo, boolean forYes) {
+	public double getLikeliHoodForMerkbaar(List<String> values) {
+		List<Double> numbers = new ArrayList<Double>();
+		double totalMerkbaar = data.getGroupedValuesForAttributeInOrdinalData(data.getNumberOfAttributes()-1, false).get("merkbaar");
+		for (String value : values)
+			numbers.add(data.getNumberOfMerkbaar(value)/totalMerkbaar);
+		return calculateLikeliHood(numbers);
+	}
+	
+	public double getLikeliHoodForGering(List<String> values) {
+		List<Double> numbers = new ArrayList<Double>();
+		double totalGering = data.getGroupedValuesForAttributeInOrdinalData(data.getNumberOfAttributes()-1, false).get("gering");
+		for (String value : values)
+			numbers.add(data.getNumberOfGering(value)/totalGering);
+		return calculateLikeliHood(numbers);
+	}
+	
+	public double calculateLikeliHood(List<Double> numbers) {
+		double likelihood = 1.0;
+		for(double number : numbers)
+			likelihood = likelihood * number;
+		return likelihood;
+	}
+	
+	public double getProbability(double likeliHoodMerkbaar, double likeliHoodGering, boolean forMerkbaar) {
 		double probability = 0.0;
-		if (forYes)
-			probability = likeliHoodYes / (likeliHoodYes + likeliHoodNo);
+		if (forMerkbaar)
+			probability = likeliHoodMerkbaar / (likeliHoodMerkbaar + likeliHoodGering);
 		else
-			probability = likeliHoodNo / (likeliHoodYes + likeliHoodNo);
-		return probability;
+			probability = likeliHoodGering / (likeliHoodMerkbaar + likeliHoodGering);
+		return probability*100;
 	}
 
 }

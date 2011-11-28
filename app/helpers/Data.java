@@ -55,6 +55,15 @@ public class Data {
         {"Leonard", "bruin", "middel", "normaal", "ja", "merkbaar"},
         {"Katie", "blond", "klein", "licht", "ja", "gering"}};
 
+    public List<String> getValuesForLikeliHood() {
+    	List<String> values = new ArrayList<String>();
+    	values.add("bruin");
+    	values.add("middel");
+    	values.add("normaal");
+    	values.add("ja");
+    	return values;
+    }
+    
     public List<List<String>> getNumericBodyLotionData() {
         List<List<String>> rows = new ArrayList<List<String>>();
 
