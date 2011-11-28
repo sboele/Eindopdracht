@@ -209,4 +209,16 @@ public class Data {
         }
         return result;
     }
+    
+    public boolean isNumericAttribute(int attributeIndex) {
+        return !getNumericValuesForAttributeInNumericData(attributeIndex).isEmpty();
+    }
+    
+    public int getNumberOfAttributes() {
+        return getAttributes().size();
+    }
+    
+    public String getResultForRow(int rowIndex) {
+        return bodyLotionNumericData[rowIndex][getNumberOfAttributes()];
+    }
 }
