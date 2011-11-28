@@ -19,14 +19,14 @@ public class Data {
 
     String[][] bodyLotionNumericData = new String[][]{
         {"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
-        {"Sarah", "blond", "1,63", "49", "nee", "merkbaar"},
-        {"Alex", "blond", "1,85", "70", "ja", "gering"},
-        {"Diana", "bruin", "1,50", "51", "ja", "gering"},
-        {"Anne", "blond", "1,55", "54", "nee", "merkbaar"},
-        {"Emily", "rood", "1,67", "80", "nee", "merkbaar"},
-        {"Peter", "bruin", "1,81", "90", "nee", "gering"},
-        {"Jan", "bruin", "1,61", "76", "nee", "gering"},
-        {"Katie", "blond", "1,53", "43", "ja", "gering"}};
+        {"Sarah", "blond", "1.63", "49", "nee", "merkbaar"},
+        {"Alex", "blond", "1.85", "70", "ja", "gering"},
+        {"Diana", "bruin", "1.50", "51", "ja", "gering"},
+        {"Anne", "blond", "1.55", "54", "nee", "merkbaar"},
+        {"Emily", "rood", "1.67", "80", "nee", "merkbaar"},
+        {"Peter", "bruin", "1.81", "90", "nee", "gering"},
+        {"Jan", "bruin", "1.61", "76", "nee", "gering"},
+        {"Katie", "blond", "1.53", "43", "ja", "gering"}};
 
     /*
      * 
@@ -87,6 +87,19 @@ public class Data {
         List<String> values = new ArrayList<String>();
         for (int i = getStartIndex(includeHeader); i < bodyLotionNumericData.length; i++) {
             values.add(bodyLotionNumericData[i][attributeIndex]);
+        }
+        return values;
+    }
+    
+    public List<Double> getNumericValuesForAttributeInNumericData(int attributeIndex) {
+        List<Double> values = new ArrayList<Double>();
+        for (int i = 1; i < bodyLotionNumericData.length; i++) {
+        	try {
+                values.add(Double.parseDouble(bodyLotionNumericData[i][attributeIndex]));
+        	}
+        	catch (NumberFormatException nfe) {
+        		return values;
+        	}
         }
         return values;
     }
