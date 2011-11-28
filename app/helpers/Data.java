@@ -5,6 +5,7 @@
 package helpers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -69,9 +70,7 @@ public class Data {
 
         for (int i = 0; i < bodyLotionNumericData.length; i++) {
             List<String> temp = new ArrayList<String>();
-            for (int j = 0; j < bodyLotionNumericData[i].length; j++) {
-                temp.add(bodyLotionNumericData[i][j]);
-            }
+            temp.addAll(Arrays.asList(bodyLotionNumericData[i]));
             rows.add(temp);
         }
 
@@ -83,9 +82,7 @@ public class Data {
 
         for (int i = 0; i < bodyLotionOrdinalData.length; i++) {
             List<String> temp = new ArrayList<String>();
-            for (int j = 0; j < bodyLotionOrdinalData[i].length; j++) {
-                temp.add(bodyLotionOrdinalData[i][j]);
-            }
+            temp.addAll(Arrays.asList(bodyLotionOrdinalData[i]));
             rows.add(temp);
         }
 
@@ -99,16 +96,15 @@ public class Data {
         }
         return values;
     }
-    
+
     public List<Double> getNumericValuesForAttributeInNumericData(int attributeIndex) {
         List<Double> values = new ArrayList<Double>();
         for (int i = 1; i < bodyLotionNumericData.length; i++) {
-        	try {
+            try {
                 values.add(Double.parseDouble(bodyLotionNumericData[i][attributeIndex]));
-        	}
-        	catch (NumberFormatException nfe) {
-        		return values;
-        	}
+            } catch (NumberFormatException nfe) {
+                return values;
+            }
         }
         return values;
     }
@@ -187,9 +183,7 @@ public class Data {
 
     public List<String> getAttributes() {
         List<String> attributes = new ArrayList<String>();
-        for (int i = 0; i < bodyLotionNumericData[0].length; i++) {
-            attributes.add(bodyLotionNumericData[0][i]);
-        }
+        attributes.addAll(Arrays.asList(bodyLotionNumericData[0]));
         return attributes;
     }
 
@@ -207,7 +201,7 @@ public class Data {
         }
         return result;
     }
-    
+
     public int maxNumberOfUniqueValuesNumeric() {
         int result = 0;
         for (int i = 1; i < getNumericBodyLotionData().get(0).size(); i++) {
@@ -218,16 +212,26 @@ public class Data {
         }
         return result;
     }
-    
+
     public boolean isNumericAttribute(int attributeIndex) {
         return !getNumericValuesForAttributeInNumericData(attributeIndex).isEmpty();
     }
-    
+
     public int getNumberOfAttributes() {
         return getAttributes().size();
     }
-    
+
     public String getResultForRow(int rowIndex) {
         return bodyLotionNumericData[rowIndex][getNumberOfAttributes()];
+    }
+
+    public List<List<String>> orderByAttribute(int attributeIndex) {
+        List<List<String>> result = getNumericBodyLotionData();
+        result.remove(0);
+
+        Sorter.sort(result, attributeIndex);
+
+        result.add(0, getAttributes());
+        return result;
     }
 }
