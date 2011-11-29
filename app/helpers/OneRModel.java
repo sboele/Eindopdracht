@@ -120,7 +120,7 @@ public class OneRModel {
 		return errors;
 	}
 	
-	public void addEmptyRowsToList(List<String> list, int numberOfRows) {
+	private void addEmptyRowsToList(List<String> list, int numberOfRows) {
 		for (int i = 0; i < numberOfRows; i++)
 			list.add(null);
 	}

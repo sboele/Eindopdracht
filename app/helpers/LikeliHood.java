@@ -29,20 +29,11 @@ public class LikeliHood {
 		return calculateLikeliHood(numbers);
 	}
 	
-	public double calculateLikeliHood(List<Double> numbers) {
+	private double calculateLikeliHood(List<Double> numbers) {
 		double likelihood = 1.0;
 		for(double number : numbers)
 			likelihood = likelihood * number;
 		return likelihood;
-	}
-	
-	public double getProbability(double likeliHoodMerkbaar, double likeliHoodGering, boolean forMerkbaar) {
-		double probability = 0.0;
-		if (forMerkbaar)
-			probability = likeliHoodMerkbaar / (likeliHoodMerkbaar + likeliHoodGering);
-		else
-			probability = likeliHoodGering / (likeliHoodMerkbaar + likeliHoodGering);
-		return probability*100;
 	}
 
 }
