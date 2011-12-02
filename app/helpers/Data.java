@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -103,6 +102,20 @@ public class Data {
         for (int i = 1; i < bodyLotionNumericData.length; i++) {
             try {
                 values.add(Double.parseDouble(bodyLotionNumericData[i][attributeIndex]));
+            } catch (NumberFormatException nfe) {
+                return values;
+            }
+        }
+        return values;
+    }
+    
+    public List<Double> getNumericValuesForAttributeInNumericDataFilteredByResult(int attributeIndex, String result) {
+        List<Double> values = new ArrayList<Double>();
+        for (int i = 1; i < bodyLotionNumericData.length; i++) {
+            try {
+                if(bodyLotionNumericData[i][getNumberOfAttributes()-1].equals(result)) {
+                    values.add(Double.parseDouble(bodyLotionNumericData[i][attributeIndex]));
+                }
             } catch (NumberFormatException nfe) {
                 return values;
             }
@@ -236,15 +249,25 @@ public class Data {
         return result;
     }
     
-    public Map<String, List<Double>> getNumericAttributesAndValues() {
-        Map<String,List<Double>> result = new HashMap<String, List<Double>>();
-        for(int i = 0 ; i < getNumberOfAttributes() ; i++) {
-            List<Double> values = getNumericValuesForAttributeInNumericData(i);
-            if(!values.isEmpty()) {
-                result.put(getAttributes().get(i), values);
+    public Map<String, Map<String, List<Double>>> getNumericAttributesAndValues() {
+        Map<String, Map<String, List<Double>>> result = new HashMap<String, Map<String, List<Double>>>();
+        for(int i = 0 ; i < getUniqueValuesForAttributeInOrdinalData(getNumberOfAttributes()-1, false).size() ; i++) {
+            for(int j = 0 ; j < getNumberOfAttributes() ; j++) {
+                List<Double> values = getNumericValuesForAttributeInNumericDataFilteredByResult(j,getUniqueValuesForAttributeInNumericData(getNumberOfAttributes()-1, false).get(i));
+                if(!values.isEmpty()) {
+                    Map<String, List<Double>> temp;
+                    if(!result.containsKey(getAttributes().get(j))) {
+                        temp = new HashMap<String, List<Double>>();
+                    }
+                    else {
+                        temp = result.get(getAttributes().get(j));
+                    }
+                        temp.put(getUniqueValuesForAttributeInNumericData(getNumberOfAttributes()-1, false).get(i), values);
+                        result.put(getAttributes().get(j), temp);
+                }
             }
         }
-        System.out.println(result.toString());
+        //System.out.println(result.toString());
         return result;
     }
 }

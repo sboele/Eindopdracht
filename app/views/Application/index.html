@@ -86,6 +86,13 @@
 </section>
 
 <section>
-    <h2>Statistiek</h2>
-    
+    <h2>Statistieke gegevens</h2>
+    #{list items:statisticInfo.keySet(), as:'key'}
+    <b>${key}</b><br/>
+        #{list items:statisticInfo.get(key), as:'item'}
+            ${item}
+            <br/>
+        #{/list}
+        <br/>
+    #{/list}
 </section>

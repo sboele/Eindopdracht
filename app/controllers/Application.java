@@ -1,12 +1,11 @@
 package controllers;
 
-import play.*;
 import play.mvc.*;
 
 import helpers.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Application extends Controller {
 
@@ -32,8 +31,9 @@ public class Application extends Controller {
 		
                 // Statistical Info
                 
-                new StatisticInfo().getStatisticInfo();
+                Map<String, List<String>> statisticInfo = new StatisticInfo().getStatisticInfo();
                 
 		render(numericTable, ordinalTable, oneRModelTable, oneRModelBestRule, bayesTableNominal, bayesTableNumeric, 
-				valuesForLikeliHood, likeliHoodForMerkbaar, likeliHoodForGering, probabilityForMerkbaar, probabilityForGering);}
+				valuesForLikeliHood, likeliHoodForMerkbaar, likeliHoodForGering, probabilityForMerkbaar,
+                                probabilityForGering, statisticInfo);}
 }
