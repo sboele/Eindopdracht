@@ -22,7 +22,7 @@ public class StatisticInfo {
     public Map<String, List<String>> getStatisticInfo()
     {
         Map<String, List<String>> result = new HashMap<String, List<String>>();
-        
+        data.getNumericAttributesAndValues();
         return result;
     }
 }

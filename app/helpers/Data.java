@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -232,6 +233,18 @@ public class Data {
         Sorter.sort(result, attributeIndex);
 
         result.add(0, getAttributes());
+        return result;
+    }
+    
+    public Map<String, List<Double>> getNumericAttributesAndValues() {
+        Map<String,List<Double>> result = new HashMap<String, List<Double>>();
+        for(int i = 0 ; i < getNumberOfAttributes() ; i++) {
+            List<Double> values = getNumericValuesForAttributeInNumericData(i);
+            if(!values.isEmpty()) {
+                result.put(getAttributes().get(i), values);
+            }
+        }
+        System.out.println(result.toString());
         return result;
     }
 }
