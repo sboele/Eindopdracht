@@ -33,7 +33,12 @@ public class Application extends Controller {
                 
                 Map<String, List<String>> statisticInfo = new StatisticInfo().getStatisticInfo();
                 
+                // Decision Tree
+                
+                Map<String, Double> infoAndGain = new DecisionTree().getInfoAndGain();
+                String highestGain = new DecisionTree().getHighestGain();
+                
 		render(numericTable, ordinalTable, oneRModelTable, oneRModelBestRule, bayesTableNominal, bayesTableNumeric, 
 				valuesForLikeliHood, likeliHoodForMerkbaar, likeliHoodForGering, probabilityForMerkbaar,
-                                probabilityForGering, statisticInfo);}
+                                probabilityForGering, statisticInfo,infoAndGain, highestGain);}
 }

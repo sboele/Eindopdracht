@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import play.Logger;
 
 /**
  * 
@@ -236,7 +237,8 @@ public class Data {
     }
 
     public String getResultForRow(int rowIndex) {
-        return bodyLotionNumericData[rowIndex][getNumberOfAttributes()];
+        Logger.info("rowIndex: %s",rowIndex);
+        return bodyLotionOrdinalData[rowIndex][getNumberOfAttributes()];
     }
 
     public List<List<String>> orderByAttribute(int attributeIndex) {
@@ -269,5 +271,41 @@ public class Data {
         }
         //System.out.println(result.toString());
         return result;
+    }
+    
+    public Map<String, List<Integer>> getAttributesAndResults(int attributeIndex) {
+        Logger.info("Attribute: %s", getAttributes().get(attributeIndex));
+        Map<String, List<Integer>> results = new HashMap<String, List<Integer>>();
+        for(int i = 1 ; i < getOrdinalBodyLotionData().size() ; i++) {
+                String value = getOrdinalBodyLotionData().get(i).get(attributeIndex);
+                String result = getOrdinalBodyLotionData().get(i).get(getNumberOfAttributes()-1);
+                //Logger.info("Value: %s - Result: %s",value, result);
+                if(result.equals("gering")) {
+                    List<Integer> total = results.get(value);
+                    if(total == null) {
+                        total = new ArrayList<Integer>();
+                        total.add(0);
+                        total.add(0);
+                    }
+                    int count = total.get(0)+1;
+                    total.set(0, count);
+                    results.put(value, total);
+                }
+                else if(result.equals("merkbaar")) {
+                    List<Integer> total = results.get(value);
+                    if(total == null) {
+                        total = new ArrayList<Integer>();
+                        total.add(0);
+                        total.add(0);
+                    }
+                    int count = total.get(1)+1;
+                    total.set(1, count);
+                    results.put(value, total);
+                }
+                
+        }
+        Logger.info("Results: %s",results.toString());
+            //attributesAndResults.put(getAttributes().get(i), m);
+        return results;
     }
 }

@@ -96,3 +96,12 @@
         <br/>
     #{/list}
 </section>
+
+<section>
+    <h2>Info & Gain</h2>
+    #{list items:infoAndGain.keySet(), as:'key'}
+    <p>gain(${key}) = ${infoAndGain.get(key)} bits</p>
+    #{/list}
+    
+    <p>De kolom met de grootste gain is: <b>${highestGain}</b></p>
+</section>
