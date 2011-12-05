@@ -30,6 +30,9 @@ public class Application extends Controller {
 		double probabilityForMerkbaar = new Statistics().getProbability(likeliHoodForMerkbaar, likeliHoodForGering, true);
 		double probabilityForGering = new Statistics().getProbability(likeliHoodForMerkbaar, likeliHoodForGering, false);
 		
+		//Discretization
+		new Discretization().getRules(new Data().getIndexOfAttribute("Lengte"));
+		
 		render(numericTable, ordinalTable, oneRModelTable, oneRModelBestRule, bayesTableNominal, bayesTableNumeric, 
 				valuesForLikeliHood, likeliHoodForMerkbaar, likeliHoodForGering, probabilityForMerkbaar, probabilityForGering);}
 }

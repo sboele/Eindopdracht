@@ -15,8 +15,7 @@ import java.util.List;
  */
 public class Sorter {
 
-    public static void sort(final List<List<String>> toSort,
-            final int onColumn) {
+    public static void sort(final List<List<String>> toSort, final int onColumn) {
         Collections.sort(toSort, new Comparator() {
 
             public int compare(List<String> a, List<String> b) {

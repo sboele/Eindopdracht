@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import play.Logger;
+
 /**
  * 
  * @author Sander
@@ -20,13 +22,13 @@ public class Data {
 
     String[][] bodyLotionNumericData = new String[][]{
         {"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
-        {"Sarah", "blond", "1.63", "49", "nee", "merkbaar"},
+        {"Sarah", "blond", "1.61", "49", "nee", "merkbaar"},
         {"Alex", "blond", "1.85", "70", "ja", "gering"},
         {"Diana", "bruin", "1.50", "51", "ja", "gering"},
         {"Anne", "blond", "1.55", "54", "nee", "merkbaar"},
-        {"Emily", "rood", "1.67", "80", "nee", "merkbaar"},
+        {"Emily", "rood", "1.62", "80", "nee", "merkbaar"},
         {"Peter", "bruin", "1.81", "90", "nee", "gering"},
-        {"Jan", "bruin", "1.61", "76", "nee", "gering"},
+        {"Jan", "bruin", "1.62", "76", "nee", "gering"},
         {"Katie", "blond", "1.53", "43", "ja", "gering"}};
 
     /*
@@ -225,13 +227,52 @@ public class Data {
         return bodyLotionNumericData[rowIndex][getNumberOfAttributes()];
     }
 
-    public List<List<String>> orderByAttribute(int attributeIndex) {
+    public List<List<String>> getOrderedNumericDataByAttribute(int attributeIndex) {
         List<List<String>> result = getNumericBodyLotionData();
         result.remove(0);
-
         Sorter.sort(result, attributeIndex);
-
         result.add(0, getAttributes());
         return result;
+    }
+    
+    public List<Double> getNumericValuesForAttributeInSortedNumericData(int attributeIndex) {
+        List<Double> values = new ArrayList<Double>();
+        List<List<String>> orderedNumericData = getOrderedNumericDataByAttribute(attributeIndex);
+        
+        //Skip first row, because that one contains the names of the attributes
+        for (List<String> row : orderedNumericData.subList(1, orderedNumericData.size())) {
+        	try {
+                values.add(Double.parseDouble(row.get(attributeIndex)));
+            } catch (NumberFormatException nfe) {
+                return values;
+            }
+        }
+        
+        return values;
+    }
+    
+//    public Map<Double, String> getMerkbaarOrGeringForSortedValues(List<Double> values, int attributeIndex) {
+//    	Map<Double, String> merkbaarOrGeringForValues = new HashMap<Double, String>();
+//    	List<List<String>> orderedNumericData = getOrderedNumericDataByAttribute(attributeIndex);
+//    	
+//        for (int i = 0 ; i < values.size(); i++) {
+//        	//Add 1 to i to skip the first row in orderedNumericData because that row contains the names of the attributes
+//        	List<String> row = orderedNumericData.get(i+1);
+//        	merkbaarOrGeringForValues.put(values.get(i), row.get(row.size()-1));
+//        }
+//    	
+//    	return merkbaarOrGeringForValues;
+//    }
+    
+    public List<String> getMerkbaarOrGeringBySortedAttribute(int attributeIndex) {
+    	List<String> merkbaarOrGeringBySortedValues = new ArrayList<String>();
+    	List<List<String>> orderedNumericData = getOrderedNumericDataByAttribute(attributeIndex);
+    	
+    	//Skip first row, because that one contains the names of the attributes
+        for (List<String> row : orderedNumericData.subList(1, orderedNumericData.size())) {
+        	merkbaarOrGeringBySortedValues.add(row.get(row.size()-1));
+        }
+        
+    	return merkbaarOrGeringBySortedValues;
     }
 }
