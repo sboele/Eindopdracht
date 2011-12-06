@@ -20,6 +20,10 @@ import play.Logger;
  */
 public class Data {
 	
+	public Data() {
+		createOrdinalDataManually();
+	}
+	
 	public Data(boolean isUsingRulesForOrdinalData) {
 		if (isUsingRulesForOrdinalData)
 			createOrdinalDataWithRules();
@@ -38,33 +42,7 @@ public class Data {
         {"Jan", "bruin", "1.61", "76", "nee", "gering"},
         {"Katie", "blond", "1.53", "43", "ja", "gering"}};
 
-    /*
-     * 
-     * LENGTE
-     * Klein: 	<= 1,60
-     * Middel: 	> 1,60 && < 1,85
-     * Groot:	>= 1,85
-     * 
-     * GEWICHT
-     * Licht: 	<= 55
-     * Normaal: > 55 && < 80
-     * Zwaar: 	>= 80
-     * 
-     */
     String[][] bodyLotionOrdinalData = new String[bodyLotionNumericData.length][bodyLotionNumericData[0].length];
-//    {
-//        {"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
-//        {"Sarah", "blond", "middel", "licht", "nee", "merkbaar"},
-//        {"Alex", "blond", "groot", "normaal", "ja", "gering"},
-//        {"Diana", "bruin", "klein", "licht", "ja", "gering"},
-//        {"Anne", "blond", "klein", "licht", "nee", "merkbaar"},
-//        {"Emily", "rood", "middel", "zwaar", "nee", "merkbaar"},
-//        {"Peter", "bruin", "middel", "zwaar", "nee", "gering"},
-//        {"Jan", "bruin", "middel", "normaal", "nee", "gering"},
-//        {"Sander", "donkerblond", "middel", "normaal", "ja", "merkbaar"},
-//        {"Ronald", "paars", "klein", "zwaar", "ja", "merkbaar"},
-//        {"Leonard", "bruin", "middel", "normaal", "ja", "merkbaar"},
-//        {"Katie", "blond", "klein", "licht", "ja", "gering"}};
     
     private void createOrdinalDataManually() {
     	for (int i = 0; i < bodyLotionNumericData.length; i++) {
@@ -90,9 +68,9 @@ public class Data {
     
     private String ordinalLengte(String lengteString) {
     	double lengte = Double.valueOf(lengteString);
-    	if (lengte <= 1.61)
+    	if (lengte <= 1.60)
     		return "klein";
-    	else if (lengte <= 1.80)
+    	else if (lengte <= 1.85)
     		return "middel";
     	else
     		return "groot";
@@ -109,9 +87,9 @@ public class Data {
     
     private String ordinalGewicht(String gewichtString) {
     	double gewicht = Double.valueOf(gewichtString);
-    	if (gewicht <= 54.0)
+    	if (gewicht <= 55.0)
     		return "licht";
-    	else if (gewicht <= 76.0)
+    	else if (gewicht <= 80.0)
     		return "normaal";
     	else
     		return "zwaar";
@@ -130,7 +108,7 @@ public class Data {
     	List<String> values = new ArrayList<String>();
     	values.add("blond");
     	values.add("klein");
-    	values.add("zwaar");
+    	values.add("licht");
     	values.add("nee");
     	return values;
     }
