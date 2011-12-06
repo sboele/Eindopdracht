@@ -15,11 +15,19 @@ import java.util.Map;
 // TODO: Total gering/merkbaar in one row
 public class Bayes {
 
-    Data data = new helpers.Data();
+    Data data;
     private int numberOfColumns = 6;
-    private int maxValuesOrdinal = data.maxNumberOfUniqueValuesOrdinal();
-    private int maxValuesNumeric = data.maxNumberOfUniqueValuesNumeric();
-    List<List<String>> rows = new ArrayList<List<String>>();
+    private int maxValuesOrdinal;
+    private int maxValuesNumeric;
+    List<List<String>> rows;
+    
+    public Bayes(boolean isUsingRulesForOrdinalData) {
+    	data = new Data(isUsingRulesForOrdinalData);
+    	numberOfColumns = 6;
+        maxValuesOrdinal = data.maxNumberOfUniqueValuesOrdinal();
+        maxValuesNumeric = data.maxNumberOfUniqueValuesNumeric();
+        rows = new ArrayList<List<String>>();
+    }
 
     public List<List<String>> getNaiveBayesNominal() {
         rows.add(getPossibleOutcomesWithEmptyColumn());

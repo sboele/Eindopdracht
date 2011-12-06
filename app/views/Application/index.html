@@ -34,6 +34,7 @@
         </tbody>
     </table>
 </section>
+
 <section>
 	<table class="oneRModel">
 		<thead>
@@ -52,6 +53,7 @@
 	</table>
 	<p class="oneRModelBestRule">Beste keuze is de rule van ${oneRModelBestRule}</p>
 </section>
+
 <section>
     <table class="naiveBayesNominal">
         <thead>
@@ -77,10 +79,112 @@
         </tbody>
     </table>
 </section>
+
 <section>
 	<p>Invoer = ${valuesForLikeliHood}</p>
 	<p>LikeliHood(Merkbaar) = ${likeliHoodForMerkbaar}</p>
 	<p>LikeliHood(Gering) = ${likeliHoodForGering}</p>
 	<p>Probability(Merkbaar) = ${probabilityForMerkbaar}%</p>
 	<p>Probability(Gering) = ${probabilityForGering}%</p>
+</section>
+
+<section>
+    <h2>Statistieke gegevens</h2>
+    #{list items:statisticInfo.keySet(), as:'key'}
+    <b>${key}</b><br/>
+        #{list items:statisticInfo.get(key), as:'item'}
+            ${item}
+            <br/>
+        #{/list}
+        <br/>
+    #{/list}
+</section>
+
+<section>
+    <h2>Info & Gain</h2>
+    #{list items:infoAndGain.keySet(), as:'key'}
+    <p>gain(${key}) = ${infoAndGain.get(key)} bits</p>
+    #{/list}
+    
+    <p>De kolom met de grootste gain is: <b>${highestGain}</b></p>
+</section>
+
+<section>
+	<h2>Rules</h2>	
+	<table class="rules">
+		<th>Lengte</th>
+		#{list items:rulesForLengte, as:'rule'}
+		<tr><td>${rule}</td></tr>
+		#{/list}
+	</table>
+	<table class="rules">
+		<th>Gewicht</th>
+		#{list items:rulesForGewicht, as:'rule'}
+		<tr><td>${rule}</td></tr>
+		#{/list}
+	</table>
+</section>
+
+<section>
+	<table class="discretizationData">
+        <thead>
+            <tr>
+                <th colspan="6">Ordinaal</th>
+            </tr>
+        </thead>
+        <tbody>
+            #{list items:ordinalTableAfterDiscretization, as:'row'}
+            <tr>
+                #{list items:row, as:'column'}
+                <td>${column}</td> 
+                #{/list}
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
+</section>
+
+<section>
+	<table class="oneRModel">
+		<thead>
+			<tr>
+				<th colspan="6">1R Model</th>
+			</tr>
+		</thead>
+		<tbody>
+			#{list items:oneRModelTableAfterDiscretization, as:'row'}
+			<tr>
+				#{list items:row, as:'column'}
+				<td>${column}</td> #{/list}
+			</tr>
+			#{/list}
+		</tbody>
+	</table>
+	<p class="oneRModelBestRule">Beste keuze is de rule van ${oneRModelBestRuleAfterDiscretization}</p>
+</section>
+
+<section>
+    <table class="naiveBayesNominal">
+        <thead>
+            <tr>
+                <th colspan="15">Naive Bayes Nominal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">Haarkleur</td> 
+                <td colspan="3">Gewicht</td> 
+                <td colspan="3">Lengte</td> 
+                <td colspan="3">Lotion</td> 
+                <td colspan="3">Resultaat</td>
+            </tr>
+            #{list items:bayesTableNominalAfterDiscretization, as:'row'}
+            <tr>
+                #{list items:row, as:'column'}
+                <td>${column}</td> 
+                #{/list}
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
 </section>

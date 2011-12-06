@@ -10,14 +10,14 @@ import play.Logger;
 
 public class OneRModel {
 	
-	private Data dataHelper;
+	private Data data;
 	
 	//Skip the first column with the names
 	private int firstColumn = 1;
 	private int numberOfColumns = 5;
 	
-	public OneRModel() {
-		dataHelper = new Data();
+	public OneRModel(boolean isUsingRulesForOrdinalData) {
+		data = new Data(isUsingRulesForOrdinalData);
 	}
 
 	public List<List<String>> getOneRModel() {
@@ -67,7 +67,7 @@ public class OneRModel {
 	}
 	
 	public List<String> getAttributes() {
-		List<String> attributes = dataHelper.getAttributes();
+		List<String> attributes = data.getAttributes();
 		List<String> tableHeader = new ArrayList<String>();
 		for (int i = firstColumn; i < numberOfColumns; i++)
 			tableHeader.add(attributes.get(i));	
@@ -75,10 +75,10 @@ public class OneRModel {
 	}
 	
 	public List<String> getRulesPerAttribute(String attribute) {
-		List<String> uniqueValuesForAttribute = dataHelper.getUniqueValuesForAttributeInOrdinalData(dataHelper.getIndexOfAttribute(attribute), false);
+		List<String> uniqueValuesForAttribute = data.getUniqueValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
 		List<String> rulesPerAttribute = new ArrayList<String>();
 		for (String uniqueValue : uniqueValuesForAttribute) {
-			if (dataHelper.getNumberOfGering(uniqueValue) > dataHelper.getNumberOfMerkbaar(uniqueValue))
+			if (data.getNumberOfGering(uniqueValue) > data.getNumberOfMerkbaar(uniqueValue))
 				rulesPerAttribute.add(uniqueValue + " -> Gering");
 			else
 				rulesPerAttribute.add(uniqueValue + " -> Merkbaar");
@@ -87,8 +87,8 @@ public class OneRModel {
 	}
 	
 	public List<String> getErrorsFieldPerRule(String attribute) {
-		List<String> uniqueValuesForAttribute = dataHelper.getUniqueValuesForAttributeInOrdinalData(dataHelper.getIndexOfAttribute(attribute), false);
-		Map<String, Integer> groupedValuesForAttribute = dataHelper.getGroupedValuesForAttributeInOrdinalData(dataHelper.getIndexOfAttribute(attribute), false);
+		List<String> uniqueValuesForAttribute = data.getUniqueValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
+		Map<String, Integer> groupedValuesForAttribute = data.getGroupedValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
 		List<String> errorsPerRule = new ArrayList<String>();
 		for (String uniqueValue : uniqueValuesForAttribute) {
 			String errors = getErrorsPerRule(uniqueValue) + "/" + groupedValuesForAttribute.get(uniqueValue);
@@ -99,20 +99,20 @@ public class OneRModel {
 	
 	public int getErrorsPerRule(String value) {
 		int errors = 0;
-		if (dataHelper.getNumberOfGering(value) > dataHelper.getNumberOfMerkbaar(value))
-			errors = dataHelper.getNumberOfMerkbaar(value);
+		if (data.getNumberOfGering(value) > data.getNumberOfMerkbaar(value))
+			errors = data.getNumberOfMerkbaar(value);
 		else
-			errors = dataHelper.getNumberOfGering(value);
+			errors = data.getNumberOfGering(value);
 		return errors;
 	}
 	
 	public String getErrorsFieldPerAttribute(String attribute) {
-		List<String> valuesForAttribute = dataHelper.getValuesForAttributeInOrdinalData(dataHelper.getIndexOfAttribute(attribute), false);
+		List<String> valuesForAttribute = data.getValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
 		return getErrorsPerAttribute(attribute) + "/" + valuesForAttribute.size();
 	}
 	
 	public int getErrorsPerAttribute(String attribute) {
-		List<String> uniqueValuesForAttribute = dataHelper.getUniqueValuesForAttributeInOrdinalData(dataHelper.getIndexOfAttribute(attribute), false);
+		List<String> uniqueValuesForAttribute = data.getUniqueValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
 		int errors = 0;
 		for(String value : uniqueValuesForAttribute) {
 			errors += getErrorsPerRule(value);

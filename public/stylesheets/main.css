@@ -33,3 +33,12 @@ table tr td {
 	float: left;
 	width: 800px;
 }
+
+.rules {
+	float: left;
+	margin-left: 10px;
+}
+
+.discretizationData {
+	float: left;
+}

@@ -9,8 +9,8 @@ public class LikeliHood {
 	
 	Data data;
 	
-	public LikeliHood() {
-		data = new Data();
+	public LikeliHood(boolean isUsingRulesForOrdinalData) {
+		data = new Data(isUsingRulesForOrdinalData);
 	}
 	
 	public double getLikeliHoodForMerkbaar(List<String> values) {

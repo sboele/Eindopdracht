@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import play.Logger;
 
 import play.Logger;
 
@@ -19,16 +20,23 @@ import play.Logger;
  * @author Sander
  */
 public class Data {
+	
+	public Data(boolean isUsingRulesForOrdinalData) {
+		if (isUsingRulesForOrdinalData)
+			createOrdinalDataWithRules();
+		else
+			createOrdinalDataManually();
+	}
 
     String[][] bodyLotionNumericData = new String[][]{
         {"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
-        {"Sarah", "blond", "1.61", "49", "nee", "merkbaar"},
+        {"Sarah", "blond", "1.63", "49", "nee", "merkbaar"},
         {"Alex", "blond", "1.85", "70", "ja", "gering"},
         {"Diana", "bruin", "1.50", "51", "ja", "gering"},
         {"Anne", "blond", "1.55", "54", "nee", "merkbaar"},
-        {"Emily", "rood", "1.62", "80", "nee", "merkbaar"},
+        {"Emily", "rood", "1.67", "80", "nee", "merkbaar"},
         {"Peter", "bruin", "1.81", "90", "nee", "gering"},
-        {"Jan", "bruin", "1.62", "76", "nee", "gering"},
+        {"Jan", "bruin", "1.61", "76", "nee", "gering"},
         {"Katie", "blond", "1.53", "43", "ja", "gering"}};
 
     /*
@@ -44,26 +52,87 @@ public class Data {
      * Zwaar: 	>= 80
      * 
      */
-    String[][] bodyLotionOrdinalData = new String[][]{
-        {"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
-        {"Sarah", "blond", "middel", "licht", "nee", "merkbaar"},
-        {"Alex", "blond", "groot", "normaal", "ja", "gering"},
-        {"Diana", "bruin", "klein", "licht", "ja", "gering"},
-        {"Anne", "blond", "klein", "licht", "nee", "merkbaar"},
-        {"Emily", "rood", "middel", "zwaar", "nee", "merkbaar"},
-        {"Peter", "bruin", "middel", "zwaar", "nee", "gering"},
-        {"Jan", "bruin", "middel", "normaal", "nee", "gering"},
-        {"Sander", "donkerblond", "middel", "normaal", "ja", "merkbaar"},
-        {"Ronald", "paars", "klein", "zwaar", "ja", "merkbaar"},
-        {"Leonard", "bruin", "middel", "normaal", "ja", "merkbaar"},
-        {"Katie", "blond", "klein", "licht", "ja", "gering"}};
+    String[][] bodyLotionOrdinalData = new String[bodyLotionNumericData.length][bodyLotionNumericData[0].length];
+//    {
+//        {"Naam", "Haarkleur", "Lengte", "Gewicht", "Lotion", "Resultaat"},
+//        {"Sarah", "blond", "middel", "licht", "nee", "merkbaar"},
+//        {"Alex", "blond", "groot", "normaal", "ja", "gering"},
+//        {"Diana", "bruin", "klein", "licht", "ja", "gering"},
+//        {"Anne", "blond", "klein", "licht", "nee", "merkbaar"},
+//        {"Emily", "rood", "middel", "zwaar", "nee", "merkbaar"},
+//        {"Peter", "bruin", "middel", "zwaar", "nee", "gering"},
+//        {"Jan", "bruin", "middel", "normaal", "nee", "gering"},
+//        {"Sander", "donkerblond", "middel", "normaal", "ja", "merkbaar"},
+//        {"Ronald", "paars", "klein", "zwaar", "ja", "merkbaar"},
+//        {"Leonard", "bruin", "middel", "normaal", "ja", "merkbaar"},
+//        {"Katie", "blond", "klein", "licht", "ja", "gering"}};
+    
+    private void createOrdinalDataManually() {
+    	for (int i = 0; i < bodyLotionNumericData.length; i++) {
+    		bodyLotionOrdinalData[i] = bodyLotionNumericData[i].clone();
+    		if (i > 0) {
+    			bodyLotionOrdinalData[i][2] = ordinalLengte(bodyLotionOrdinalData[i][2]);
+    			bodyLotionOrdinalData[i][3] = ordinalGewicht(bodyLotionOrdinalData[i][3]);
+    		}
+    	}
+    }
+    
+    private void createOrdinalDataWithRules() {
+    	List<Double> rulesForLengte = new Discretization().getRules(2);
+    	List<Double> rulesForGewicht = new Discretization().getRules(3);
+    	for (int i = 0; i < bodyLotionNumericData.length; i++) {
+    		bodyLotionOrdinalData[i] = bodyLotionNumericData[i].clone();
+    		if (i > 0) {
+    			bodyLotionOrdinalData[i][2] = ordinalLengte(bodyLotionOrdinalData[i][2], rulesForLengte);
+    			bodyLotionOrdinalData[i][3] = ordinalGewicht(bodyLotionOrdinalData[i][3], rulesForGewicht);
+    		}
+    	}
+    }
+    
+    private String ordinalLengte(String lengteString) {
+    	double lengte = Double.valueOf(lengteString);
+    	if (lengte <= 1.61)
+    		return "klein";
+    	else if (lengte <= 1.80)
+    		return "middel";
+    	else
+    		return "groot";
+    }
+    
+    private String ordinalLengte(String lengteString, List<Double> rulesForLengte) {
+    	double lengte = Double.valueOf(lengteString);
+    	for (int i = 1; i < rulesForLengte.size(); i++) {
+    		if (lengte <= rulesForLengte.get(i))
+    			return "group" + i;
+    	}
+    	return "error";
+    }
+    
+    private String ordinalGewicht(String gewichtString) {
+    	double gewicht = Double.valueOf(gewichtString);
+    	if (gewicht <= 54.0)
+    		return "licht";
+    	else if (gewicht <= 76.0)
+    		return "normaal";
+    	else
+    		return "zwaar";
+    }
+    
+    private String ordinalGewicht(String gewichtString, List<Double> rulesForGewicht) {
+    	double gewicht = Double.valueOf(gewichtString);
+    	for (int i = 1; i < rulesForGewicht.size(); i++) {
+    		if (gewicht <= rulesForGewicht.get(i))
+    			return "group" + i;
+    	}
+    	return "error";
+    }
 
     public List<String> getValuesForLikeliHood() {
     	List<String> values = new ArrayList<String>();
-    	values.add("bruin");
-    	values.add("middel");
-    	values.add("normaal");
-    	values.add("ja");
+    	values.add("blond");
+    	values.add("klein");
+    	values.add("zwaar");
+    	values.add("nee");
     	return values;
     }
     
@@ -104,6 +173,20 @@ public class Data {
         for (int i = 1; i < bodyLotionNumericData.length; i++) {
             try {
                 values.add(Double.parseDouble(bodyLotionNumericData[i][attributeIndex]));
+            } catch (NumberFormatException nfe) {
+                return values;
+            }
+        }
+        return values;
+    }
+    
+    public List<Double> getNumericValuesForAttributeInNumericDataFilteredByResult(int attributeIndex, String result) {
+        List<Double> values = new ArrayList<Double>();
+        for (int i = 1; i < bodyLotionNumericData.length; i++) {
+            try {
+                if(bodyLotionNumericData[i][getNumberOfAttributes()-1].equals(result)) {
+                    values.add(Double.parseDouble(bodyLotionNumericData[i][attributeIndex]));
+                }
             } catch (NumberFormatException nfe) {
                 return values;
             }
@@ -224,7 +307,8 @@ public class Data {
     }
 
     public String getResultForRow(int rowIndex) {
-        return bodyLotionNumericData[rowIndex][getNumberOfAttributes()];
+        Logger.info("rowIndex: %s",rowIndex);
+        return bodyLotionOrdinalData[rowIndex][getNumberOfAttributes()];
     }
 
     public List<List<String>> getOrderedNumericDataByAttribute(int attributeIndex) {
@@ -244,25 +328,12 @@ public class Data {
         	try {
                 values.add(Double.parseDouble(row.get(attributeIndex)));
             } catch (NumberFormatException nfe) {
-                return values;
+            	Logger.info("NumberFormatException: %s", nfe);
+                System.exit(-1);
             }
         }
-        
         return values;
     }
-    
-//    public Map<Double, String> getMerkbaarOrGeringForSortedValues(List<Double> values, int attributeIndex) {
-//    	Map<Double, String> merkbaarOrGeringForValues = new HashMap<Double, String>();
-//    	List<List<String>> orderedNumericData = getOrderedNumericDataByAttribute(attributeIndex);
-//    	
-//        for (int i = 0 ; i < values.size(); i++) {
-//        	//Add 1 to i to skip the first row in orderedNumericData because that row contains the names of the attributes
-//        	List<String> row = orderedNumericData.get(i+1);
-//        	merkbaarOrGeringForValues.put(values.get(i), row.get(row.size()-1));
-//        }
-//    	
-//    	return merkbaarOrGeringForValues;
-//    }
     
     public List<String> getMerkbaarOrGeringBySortedAttribute(int attributeIndex) {
     	List<String> merkbaarOrGeringBySortedValues = new ArrayList<String>();
@@ -274,5 +345,88 @@ public class Data {
         }
         
     	return merkbaarOrGeringBySortedValues;
+    }
+    
+    public Map<String, Map<String, List<Double>>> getNumericAttributesAndValues() {
+        Map<String, Map<String, List<Double>>> result = new HashMap<String, Map<String, List<Double>>>();
+        for(int i = 0 ; i < getUniqueValuesForAttributeInOrdinalData(getNumberOfAttributes()-1, false).size() ; i++) {
+            for(int j = 0 ; j < getNumberOfAttributes() ; j++) {
+                List<Double> values = getNumericValuesForAttributeInNumericDataFilteredByResult(j,getUniqueValuesForAttributeInNumericData(getNumberOfAttributes()-1, false).get(i));
+                if(!values.isEmpty()) {
+                    Map<String, List<Double>> temp;
+                    if(!result.containsKey(getAttributes().get(j)))
+                        temp = new HashMap<String, List<Double>>();
+                    else
+                        temp = result.get(getAttributes().get(j));
+                    temp.put(getUniqueValuesForAttributeInNumericData(getNumberOfAttributes()-1, false).get(i), values);
+                    result.put(getAttributes().get(j), temp);
+                }
+            }
+        }
+        return result;
+    }
+    
+    public Map<String, List<Integer>> getValuesAndTimesOccuring(int attributeIndex) {
+        Map<String, List<Integer>> results = new HashMap<String, List<Integer>>();
+        for(int i = 1 ; i < getOrdinalBodyLotionData().size() ; i++) {
+                String value = getOrdinalBodyLotionData().get(i).get(attributeIndex);
+                String result = getOrdinalBodyLotionData().get(i).get(getNumberOfAttributes()-1);
+                if(result.equals("gering")) {
+                    List<Integer> total = results.get(value);
+                    if(total == null) {
+                        total = new ArrayList<Integer>();
+                        total.add(0);
+                        total.add(0);
+                    }
+                    int count = total.get(0)+1;
+                    total.set(0, count);
+                    results.put(value, total);
+                }
+                else if(result.equals("merkbaar")) {
+                    List<Integer> total = results.get(value);
+                    if(total == null) {
+                        total = new ArrayList<Integer>();
+                        total.add(0);
+                        total.add(0);
+                    }
+                    int count = total.get(1)+1;
+                    total.set(1, count);
+                    results.put(value, total);
+                }
+                
+        }
+        return results;
+    }
+    
+    public Map<String, List<Integer>> getValuesAndTimesOccuringInNumericData(int attributeIndex) {
+        Map<String, List<Integer>> results = new HashMap<String, List<Integer>>();
+        for(int i = 1 ; i < getNumericBodyLotionData().size() ; i++) {
+                String value = getNumericBodyLotionData().get(i).get(attributeIndex);
+                String result = getNumericBodyLotionData().get(i).get(getNumberOfAttributes()-1);
+                if(result.equals("gering")) {
+                    List<Integer> total = results.get(value);
+                    if(total == null) {
+                        total = new ArrayList<Integer>();
+                        total.add(0);
+                        total.add(0);
+                    }
+                    int count = total.get(0)+1;
+                    total.set(0, count);
+                    results.put(value, total);
+                }
+                else if(result.equals("merkbaar")) {
+                    List<Integer> total = results.get(value);
+                    if(total == null) {
+                        total = new ArrayList<Integer>();
+                        total.add(0);
+                        total.add(0);
+                    }
+                    int count = total.get(1)+1;
+                    total.set(1, count);
+                    results.put(value, total);
+                }
+                
+        }
+        return results;
     }
 }
