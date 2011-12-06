@@ -31,7 +31,7 @@ public class Application extends Controller {
 		double probabilityForGering = new Statistics().getProbability(likeliHoodForMerkbaar, likeliHoodForGering, false);
 		
 		//Statistical Info        
-		Map<String, List<String>> statisticInfo = new StatisticInfo(false).getStatisticInfo();        
+		Map<String, List<String>> statisticInfo = new StatisticInfo(false).getStatisticInfo();
 
 		//Decision Tree        
 		Map<String, Double> infoAndGain = new DecisionTree(false).getInfoAndGain();
@@ -49,14 +49,18 @@ public class Application extends Controller {
 		List<List<String>> oneRModelTableAfterDiscretization = new OneRModel(true).getOneRModel();
 		String oneRModelBestRuleAfterDiscretization = new OneRModel(true).getAttributeWithLeastErrors();
 		
-		//Bayes Table
+		//Bayes Table after Discretization
 		List<List<String>> bayesTableNominalAfterDiscretization = new Bayes(true).getNaiveBayesNominal();
 		List<List<String>> bayesTableNumericAfterDiscretization = new Bayes(true).getNaiveBayesNumeric();
-		
+
+		//Decision Tree        
+		Map<String, Double> infoAndGainAfterDiscretization = new DecisionTree(true).getInfoAndGain();
+		String highestGainAfterDiscretization = new DecisionTree(true).getHighestGain();
+                
 		render(numericTable, ordinalTable, oneRModelTable, oneRModelBestRule, bayesTableNominal, bayesTableNumeric, 
 				valuesForLikeliHood, likeliHoodForMerkbaar, likeliHoodForGering, probabilityForMerkbaar,
 				probabilityForGering, statisticInfo,infoAndGain, highestGain, rulesForLengte, rulesForGewicht, 
 				ordinalTableAfterDiscretization, oneRModelTableAfterDiscretization, oneRModelBestRuleAfterDiscretization,
-				bayesTableNominalAfterDiscretization, bayesTableNumericAfterDiscretization);
+				bayesTableNominalAfterDiscretization, bayesTableNumericAfterDiscretization, infoAndGainAfterDiscretization,highestGainAfterDiscretization);
 		}
 }

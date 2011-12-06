@@ -188,3 +188,12 @@
         </tbody>
     </table>
 </section>
+
+<section>
+    <h2>Info & Gain</h2>
+    #{list items:infoAndGainAfterDiscretization.keySet(), as:'key'}
+    <p>gain(${key}) = ${infoAndGainAfterDiscretization.get(key)} bits</p>
+    #{/list}
+    
+    <p>De kolom met de grootste gain is: <b>${highestGainAfterDiscretization}</b></p>
+</section>

@@ -7,7 +7,6 @@ package helpers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.smartcardio.ATR;
 import play.Logger;
 
 /**
@@ -31,7 +30,7 @@ public class DecisionTree {
         totaal = attributesAndResults.get("merkbaar").get(1) + attributesAndResults.get("gering").get(0);
         infoResultaat = getInfo(attributesAndResults.get("merkbaar").get(1), attributesAndResults.get("gering").get(0));
         for(int i = 0 ; i < data.getNumberOfAttributes()-1 ; i++) {
-            if(data.getUniqueValuesForAttributeInOrdinalData(i, false).size() < data.getNumericBodyLotionData().size()) {
+            if(data.getUniqueValuesForAttributeInOrdinalData(i, false).size() < data.getNumericBodyLotionData().size()-1) {
                 attributesAndResults = data.getValuesAndTimesOccuring(i);
                 double info = 0.0;
                 for(String key : attributesAndResults.keySet()) {
