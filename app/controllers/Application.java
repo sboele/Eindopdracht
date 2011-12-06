@@ -39,8 +39,8 @@ public class Application extends Controller {
 		
 		
 		//Discretization
-		List<String> rulesForLengte = new Discretization().getRulesInHtml(new Data(false).getIndexOfAttribute("Lengte"));
-		List<String> rulesForGewicht = new Discretization().getRulesInHtml(new Data(false).getIndexOfAttribute("Gewicht"));
+		List<String> rulesForLengte = new Discretization().getRulesInHtml("Lengte");
+		List<String> rulesForGewicht = new Discretization().getRulesInHtml("Gewicht");
 		
 		//Data table after Discretization
 		List<List<String>> ordinalTableAfterDiscretization = new Data(true).getOrdinalBodyLotionData();

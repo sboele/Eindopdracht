@@ -103,7 +103,7 @@ public class Data {
     	double lengte = Double.valueOf(lengteString);
     	for (int i = 1; i < rulesForLengte.size(); i++) {
     		if (lengte <= rulesForLengte.get(i))
-    			return "group" + i;
+    			return "Lengte" + i;
     	}
     	return "error";
     }
@@ -122,7 +122,7 @@ public class Data {
     	double gewicht = Double.valueOf(gewichtString);
     	for (int i = 1; i < rulesForGewicht.size(); i++) {
     		if (gewicht <= rulesForGewicht.get(i))
-    			return "group" + i;
+    			return "Gewicht" + i;
     	}
     	return "error";
     }

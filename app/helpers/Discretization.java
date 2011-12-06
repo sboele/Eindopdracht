@@ -18,11 +18,11 @@ public class Discretization {
 		return determineRules(partitioning(attributeIndex), attributeIndex);	
 	}
 	
-	public List<String> getRulesInHtml(int attributeIndex) {
+	public List<String> getRulesInHtml(String attribute) {
 		List<String> rulesInHtml = new ArrayList<String>();
-		List<Double> rules = getRules(attributeIndex);		
+		List<Double> rules = getRules(new Data(false).getIndexOfAttribute(attribute));		
 		for(int i = 0; i < rules.size()-1; i++) {
-			String rule = "Groep" + i + " -> rule: " + rules.get(i) + " - " + rules.get(i+1);
+			String rule = attribute + i + " -> rule: " + rules.get(i) + " - " + rules.get(i+1);
 			rulesInHtml.add(rule);
 		}
 		return rulesInHtml;

@@ -90,6 +90,8 @@ public class OneRModel {
 		List<String> uniqueValuesForAttribute = data.getUniqueValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
 		Map<String, Integer> groupedValuesForAttribute = data.getGroupedValuesForAttributeInOrdinalData(data.getIndexOfAttribute(attribute), false);
 		List<String> errorsPerRule = new ArrayList<String>();
+		Logger.info("a  " + uniqueValuesForAttribute);
+
 		for (String uniqueValue : uniqueValuesForAttribute) {
 			String errors = getErrorsPerRule(uniqueValue) + "/" + groupedValuesForAttribute.get(uniqueValue);
 			errorsPerRule.add(errors);	
@@ -98,12 +100,9 @@ public class OneRModel {
 	}
 	
 	public int getErrorsPerRule(String value) {
-		int errors = 0;
-		if (data.getNumberOfGering(value) > data.getNumberOfMerkbaar(value))
-			errors = data.getNumberOfMerkbaar(value);
-		else
-			errors = data.getNumberOfGering(value);
-		return errors;
+		Logger.info("value " + data.getNumberOfGering(value));
+		Logger.info("value " + data.getNumberOfMerkbaar(value));
+		return data.getNumberOfGering(value) > data.getNumberOfMerkbaar(value) ? data.getNumberOfMerkbaar(value) : data.getNumberOfGering(value);
 	}
 	
 	public String getErrorsFieldPerAttribute(String attribute) {
