@@ -113,8 +113,6 @@ public class Discretization {
 	 *  Check if the times the value appears is even
 	 *  If even, add value to the previous group
 	 *  If odd, check if the values have the most Merkbaar or Gering, then add to that group (previous or next)
-	 * Else
-	 *  Get mean of the borders
 	 *  
 	 * indexFirstBorder = last index of group on the left
 	 * indexSecondBorder = first index of group on the right
